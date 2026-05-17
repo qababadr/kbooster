@@ -7,8 +7,8 @@ Kbooster is a Kotlin-based code generation library built on top of KSP, designed
 ## ✨ Features
 
 - UseCases generation with hilt Module
-- Validation
-- Networking on top on Ktor
+- Validations generation
+- Networking on top of Ktor
 - Data Cryptography on Top of security-crypto
 
 ---
