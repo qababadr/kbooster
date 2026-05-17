@@ -46,6 +46,8 @@ dependencies {
     implementation("io.ktor:ktor-client-mock:2.3.12")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation("com.google.code.gson:gson:2.11.0")
+    implementation(libs.androidx.security.crypto)
+    implementation(libs.androidx.core.ktx)
     compileOnly("com.google.android:android:4.1.1.4")
 }
 
