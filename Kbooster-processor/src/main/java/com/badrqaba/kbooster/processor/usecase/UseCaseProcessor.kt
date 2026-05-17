@@ -17,7 +17,7 @@ class UseCaseProcessor(
 ) : SymbolProcessor {
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
-        logger.warn("KBooster processor started")
+        logger.warn("Kbooster usecase processor started")
         val symbols = resolver
             .getSymbolsWithAnnotation(Usecaseable::class.qualifiedName!!)
             .filterIsInstance<KSClassDeclaration>()

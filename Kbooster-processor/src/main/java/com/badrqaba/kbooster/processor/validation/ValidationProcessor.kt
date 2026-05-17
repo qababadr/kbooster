@@ -1,5 +1,6 @@
 package com.badrqaba.kbooster.processor.validation
 
+import com.badrqaba.kbooster.core.annotation.Validatable
 import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.*
 import com.squareup.kotlinpoet.*
@@ -7,33 +8,35 @@ import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.ksp.*
 
 class ValidationProcessor(
-    private val codeGenerator: CodeGenerator
+    private val codeGenerator: CodeGenerator,
+    private val logger: KSPLogger
 ) : SymbolProcessor {
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
+        logger.warn("Kbooster validation processor started")
 
         val fieldRuleClass = ClassName(
-            "com.badrqaba.kbooster.validation.core",
+            "com.badrqaba.kbooster.core.validation.core",
             "FieldRule"
         )
 
         val fieldErrorClass = ClassName(
-            "com.badrqaba.kbooster.validation.core",
+            "com.badrqaba.kbooster.core.validation.core",
             "FieldError"
         )
 
         val validatorClass = ClassName(
-            "com.badrqaba.kbooster.validation.core",
+            "com.badrqaba.kbooster.core.validation.core",
             "Validator"
         )
 
         val formStateClass = ClassName(
-            "com.badrqaba.kbooster.validation.core",
+            "com.badrqaba.kbooster.core.validation.core",
             "FormState"
         )
 
         val symbols = resolver
-            .getSymbolsWithAnnotation("com.badrqaba.kbooster.annotation.Validatable")
+            .getSymbolsWithAnnotation(Validatable::class.qualifiedName!!)
             .filterIsInstance<KSClassDeclaration>()
 
         symbols.forEach { clazz ->
@@ -388,7 +391,7 @@ class ValidationProcessor(
 )
 """,
                                     ClassName(
-                                        "com.badrqaba.kbooster.validation.rules",
+                                        "com.badrqaba.kbooster.core.validation.rules",
                                         "EqualsRule"
                                     ),
                                     propName,
@@ -445,7 +448,7 @@ class ValidationProcessor(
                 .superclass(validatorClass.parameterizedBy(modelClass))
                 .addSuperclassConstructorParameter(
                     "listOf<%T>(\n%L\n)",
-                    ClassName("com.badrqaba.kbooster.validation.rules", "ValidationRule").parameterizedBy(modelClass),
+                    ClassName("com.badrqaba.kbooster.core.validation.rules", "ValidationRule").parameterizedBy(modelClass),
                     rulesCode.joinToCode(",\n")
                 )
                 .build()

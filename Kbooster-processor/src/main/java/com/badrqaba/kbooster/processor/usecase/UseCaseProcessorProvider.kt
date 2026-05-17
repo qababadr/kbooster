@@ -8,7 +8,7 @@ class UseCaseProcessorProvider : SymbolProcessorProvider {
     override fun create(
         environment: SymbolProcessorEnvironment
     ): SymbolProcessor {
-        environment.logger.warn("Provider created")
+        environment.logger.warn("UseCaseProcessorProvider created")
         return UseCaseProcessor(
             environment.codeGenerator,
             logger = environment.logger
